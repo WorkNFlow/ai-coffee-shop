@@ -1,0 +1,194 @@
+---
+import ru from "../i18n/ru.json";
+import { locationsData } from "../data/locations";
+
+const t = ru.locations;
+---
+
+<section id="locations" class="py-24 sm:py-32 relative bg-stone-900/20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Section Header -->
+    <div class="text-center max-w-3xl mx-auto mb-16 sm:mb-24">
+      <h2 class="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">
+        <span data-i18n="locations.title">{t.title}</span>
+      </h2>
+      <div class="h-1 w-20 bg-amber-500 rounded-full mx-auto mb-6"></div>
+    </div>
+
+    <!-- Map & Cards Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+      
+      <!-- Cards list -->
+      <div class="lg:col-span-5 space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+        {locationsData.map((loc) => (
+          <div 
+            data-location-card={loc.id}
+            data-lat={loc.coordinates ? loc.coordinates[0] : ""}
+            data-lng={loc.coordinates ? loc.coordinates[1] : ""}
+            class={`p-5 rounded-2xl border transition-all duration-300 backdrop-blur-sm cursor-pointer ${
+              loc.status === "soon" 
+                ? "bg-amber-950/5 border-amber-900/20 cursor-default" 
+                : "bg-stone-900/40 border-stone-850 hover:border-amber-900/50 hover:bg-stone-900/60"
+            }`}
+          >
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-lg font-bold text-white font-serif tracking-wide">{loc.name.ru}</h3>
+              {loc.status === "soon" && (
+                <span data-i18n="locations.status_soon" class="px-2.5 py-0.5 rounded-full bg-amber-900/50 text-amber-300 text-xs font-semibold uppercase tracking-wider">
+                  {t.status_soon}
+                </span>
+              )}
+            </div>
+            
+            <p class="text-stone-300 text-sm mb-3">
+              {loc.status === "soon" ? (
+                <span data-i18n="locations.soon_desc">{t.soon_desc}</span>
+              ) : (
+                <span>{loc.address.ru}</span>
+              )}
+            </p>
+            
+            {loc.status === "active" && (
+              <div class="space-y-2">
+                <p class="text-stone-400 text-xs flex items-center gap-1.5">
+                  <svg class="w-3.5 h-3.5 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span data-i18n="locations.opening_hours" class="font-medium text-stone-500">{t.opening_hours}</span>
+                  <span>{loc.hours.ru}</span>
+                </p>
+                <div class="pt-2">
+                  <a 
+                    data-i18n="locations.route"
+                    href={`https://yandex.ru/maps/?rtext=~${loc.coordinates?.[0]},${loc.coordinates?.[1]}`}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1.5 text-amber-500 hover:text-amber-400 text-xs font-semibold transition-colors duration-200"
+                    onclick="event.stopPropagation();"
+                  >
+                    <span>{t.route}</span>
+                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <!-- Map -->
+      <div class="lg:col-span-7 h-[300px] sm:h-[450px] lg:h-auto rounded-3xl border border-stone-850 overflow-hidden relative bg-stone-900/30">
+        <div id="map" class="w-full h-full"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Load Yandex Maps API -->
+<script is:inline src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Check if ymaps is loaded
+    if (typeof ymaps === "undefined") {
+      console.error("Yandex Maps API is not loaded");
+      return;
+    }
+
+    ymaps.ready(init);
+
+    function init() {
+      // Coordinates of Kaliningrad city center
+      const center = [54.7101, 20.505];
+      
+      const map = new ymaps.Map("map", {
+        center: center,
+        zoom: 11,
+        controls: ["zoomControl", "fullscreenControl"]
+      });
+
+      // Markers array
+      const markers = [
+        {
+          coords: [54.7196, 20.4996],
+          title: "Бухта Центр",
+          address: "пр-т Мира, 14"
+        },
+        {
+          coords: [54.7291, 20.5185],
+          title: "Бухта у Озера",
+          address: "ул. Верхнеозёрная, 2А"
+        },
+        {
+          coords: [54.7032, 20.4965],
+          title: "Бухта Порт",
+          address: "ул. Портовая, 30"
+        },
+        {
+          coords: [54.9658, 20.4851],
+          title: "Бухта Побережье (Скоро открытие)",
+          address: "Зеленоградск, променад"
+        }
+      ];
+
+      const placemarks = [];
+
+      markers.forEach((m, index) => {
+        const placemark = new ymaps.Placemark(
+          m.coords,
+          {
+            balloonContentHeader: `<span style="font-family: serif; font-weight: bold; color: #b45309;">${m.title}</span>`,
+            balloonContentBody: `<span>${m.address}</span>`,
+            hintContent: m.title
+          },
+          {
+            preset: index === 3 ? "islands#orangeCircleDotIcon" : "islands#orangeCoffeeIcon",
+            iconColor: "#b45309"
+          }
+        );
+
+        map.geoObjects.add(placemark);
+        placemarks.push(placemark);
+      });
+
+      // Interaction with cards
+      const cards = document.querySelectorAll("[data-location-card]");
+      cards.forEach((card, index) => {
+        card.addEventListener("click", () => {
+          const lat = card.getAttribute("data-lat");
+          const lng = card.getAttribute("data-lng");
+          if (!lat || !lng) return;
+
+          map.setCenter([parseFloat(lat), parseFloat(lng)], 14, {
+            checkZoomRange: true,
+            duration: 800
+          });
+
+          // Open balloon
+          placemarks[index].balloon.open();
+        });
+      });
+    }
+  });
+</script>
+
+<style>
+  /* Custom scrollbar styling */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #292524;
+    border-radius: 3px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #44403c;
+  }
+</style>

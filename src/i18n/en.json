@@ -1,0 +1,73 @@
+{
+  "nav": {
+    "about": "Story",
+    "menu": "Menu",
+    "roasting": "Roasting",
+    "locations": "Locations",
+    "events": "Events",
+    "careers": "Careers",
+    "contact": "Contact"
+  },
+  "hero": {
+    "tagline": "A Quiet Haven in the World of Coffee",
+    "subtagline": "Freshly roasted coffee by our own roastery on the Baltic coast. A place where everyone feels warm and cozy.",
+    "cta": "Learn More"
+  },
+  "about": {
+    "title": "The Story of Bukhta",
+    "history_1": "Bukhta was founded by a husband-and-wife duo, Anna and Dmitry Sokolov. Both engineers by education, we discovered coffee through a hobby: first roasting beans at home on a small roaster for ourselves and friends, which in 2019 grew into a fully-fledged roasting workshop and our first coffee shop.",
+    "history_2": "The idea came to us on the Baltic coast. The name \"Bukhta\" (Bay) represents the image of a quiet haven—a place where you can shelter from the city bustle for ten minutes over a cup of good coffee. Our tone is warm, unhurried, and sincere, like a chat with a good friend.",
+    "values_title": "Our Values",
+    "value_direct": "Direct sourcing from small farms at a fair price",
+    "value_eco": "Zero waste mindset: bring-your-own-cup discount & compostable packaging",
+    "value_edu": "Regular free cuppings (tastings) and home brewing classes"
+  },
+  "menu": {
+    "title": "Our Menu",
+    "subtitle": "All drinks are made from freshly roasted beans. The menu is updated manually.",
+    "espresso_base": "Espresso Bar",
+    "alternative": "Alternative Brewing (V60, Chemex, Aeropress)",
+    "food": "Pastries & Breakfast",
+    "order_button": "Order Coffee Beans"
+  },
+  "roasting": {
+    "title": "Beans & Roasting",
+    "description_1": "We buy our coffee beans directly from small family farms. This guarantees that farmers receive fair pay for their labor and our guests get access to unique microlots.",
+    "description_2": "We roast our coffee ourselves every week in our local workshop. In addition to classic varieties, we always have seasonal items and rare lots.",
+    "subscription": "Subscription \"Bean of the Month\"",
+    "subscription_desc": "Every month we select the most interesting freshly roasted beans and deliver them to your door. Write to us to subscribe.",
+    "gift_card": "Gift Cards",
+    "gift_card_desc": "Give your loved ones a journey into the world of specialty coffee. Cards of any value.",
+    "order_beans": "Order Coffee Beans",
+    "order_gift_card": "Buy a Gift Card"
+  },
+  "locations": {
+    "title": "Our Coffee Shops",
+    "route": "Get Route",
+    "opening_hours": "Opening hours:",
+    "status_soon": "Opening Soon",
+    "soon_desc": "Zelenogradsk — Fall 2026. Looking forward to welcoming you right by the seaside!"
+  },
+  "events": {
+    "title": "Cuppings & Classes",
+    "description": "We regularly host cuppings (professional coffee tastings) and home brewing workshops. It's a great opportunity to learn how to distinguish flavor notes and brew coffee like a barista.",
+    "button": "Sign Up for Cupping"
+  },
+  "careers": {
+    "title": "Careers",
+    "description": "Our team currently consists of 12 people, but we are constantly growing. We are looking for people who love coffee as much as we do and are ready to share their warmth with our guests.",
+    "positions_title": "Open Positions:",
+    "barista": "Barista (Kaliningrad)",
+    "roaster": "Roaster's Assistant (Workshop)",
+    "button": "Apply for Job"
+  },
+  "contact": {
+    "title": "Get in touch",
+    "hours_title": "Working Hours",
+    "phone_title": "Phone",
+    "email_title": "Email"
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  }
+}

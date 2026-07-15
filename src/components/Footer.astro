@@ -1,0 +1,18 @@
+---
+import ru from "../i18n/ru.json";
+
+const t = ru.footer;
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-stone-950 border-t border-stone-900 py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+    <div class="font-serif text-lg font-bold tracking-wider text-amber-500 uppercase">Бухта Coffee Roasters</div>
+    <p class="text-stone-500 text-xs sm:text-sm">
+      &copy; 2019–{currentYear} <span data-i18n="footer.rights">{t.rights}</span>
+    </p>
+    <p class="text-stone-600 text-xxs font-mono">
+      Калининград • Зеленоградск
+    </p>
+  </div>
+</footer>

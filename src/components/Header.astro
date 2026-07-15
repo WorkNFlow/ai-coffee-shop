@@ -1,0 +1,108 @@
+---
+import ru from "../i18n/ru.json";
+
+// Default to Russian values for static SSR
+const t = ru.nav;
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-stone-950/80 backdrop-blur-md border-b border-stone-900 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <!-- Logo -->
+      <div class="flex-shrink-0">
+        <a href="#" class="flex items-center gap-2">
+          <span class="font-serif text-2xl font-bold tracking-wider text-amber-500 uppercase">Бухта</span>
+          <span class="text-stone-500 text-xs hidden sm:inline-block tracking-widest font-mono">COFFEE ROASTERS</span>
+        </a>
+      </div>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-8 items-center">
+        <a href="#about" data-i18n="nav.about" class="text-stone-300 hover:text-amber-500 px-3 py-2 text-sm font-medium transition-colors">{t.about}</a>
+        <a href="#menu" data-i18n="nav.menu" class="text-stone-300 hover:text-amber-500 px-3 py-2 text-sm font-medium transition-colors">{t.menu}</a>
+        <a href="#roasting" data-i18n="nav.roasting" class="text-stone-300 hover:text-amber-500 px-3 py-2 text-sm font-medium transition-colors">{t.roasting}</a>
+        <a href="#locations" data-i18n="nav.locations" class="text-stone-300 hover:text-amber-500 px-3 py-2 text-sm font-medium transition-colors">{t.locations}</a>
+        <a href="#events" data-i18n="nav.events" class="text-stone-300 hover:text-amber-500 px-3 py-2 text-sm font-medium transition-colors">{t.events}</a>
+        <a href="#careers" data-i18n="nav.careers" class="text-stone-300 hover:text-amber-500 px-3 py-2 text-sm font-medium transition-colors">{t.careers}</a>
+        <a href="#contact" data-i18n="nav.contact" class="text-stone-300 hover:text-amber-500 px-3 py-2 text-sm font-medium transition-colors">{t.contact}</a>
+      </nav>
+
+      <!-- Language Switcher & Mobile Menu Trigger -->
+      <div class="flex items-center gap-4">
+        <!-- Language Switcher -->
+        <div class="flex border border-stone-800 rounded-lg p-0.5 bg-stone-900">
+          <button 
+            data-lang-btn="ru" 
+            onclick="window.translatePage('ru')" 
+            class="px-3 py-1 text-xs font-semibold rounded-md transition-all bg-amber-800 text-white"
+          >
+            RU
+          </button>
+          <button 
+            data-lang-btn="en" 
+            onclick="window.translatePage('en')" 
+            class="px-3 py-1 text-xs font-semibold rounded-md transition-all text-stone-400 hover:text-stone-200"
+          >
+            EN
+          </button>
+        </div>
+
+        <!-- Mobile menu button -->
+        <button 
+          id="mobile-menu-btn"
+          type="button" 
+          class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-stone-400 hover:text-amber-500 hover:bg-stone-900 focus:outline-none"
+        >
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-stone-900 bg-stone-950/95 backdrop-blur-lg">
+    <div class="px-2 pt-2 pb-4 space-y-1 sm:px-3">
+      <a href="#about" data-i18n="nav.about" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-stone-300 hover:text-amber-500 hover:bg-stone-900 transition-all">{t.about}</a>
+      <a href="#menu" data-i18n="nav.menu" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-stone-300 hover:text-amber-500 hover:bg-stone-900 transition-all">{t.menu}</a>
+      <a href="#roasting" data-i18n="nav.roasting" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-stone-300 hover:text-amber-500 hover:bg-stone-900 transition-all">{t.roasting}</a>
+      <a href="#locations" data-i18n="nav.locations" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-stone-300 hover:text-amber-500 hover:bg-stone-900 transition-all">{t.locations}</a>
+      <a href="#events" data-i18n="nav.events" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-stone-300 hover:text-amber-500 hover:bg-stone-900 transition-all">{t.events}</a>
+      <a href="#careers" data-i18n="nav.careers" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-stone-300 hover:text-amber-500 hover:bg-stone-900 transition-all">{t.careers}</a>
+      <a href="#contact" data-i18n="nav.contact" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-stone-300 hover:text-amber-500 hover:bg-stone-900 transition-all">{t.contact}</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const openIcon = document.getElementById("menu-icon-open");
+  const closeIcon = document.getElementById("menu-icon-close");
+  const mobileNavLinks = document.querySelectorAll(".mobile-nav-link");
+
+  function toggleMenu() {
+    const isExpanded = mobileMenu?.classList.contains("hidden");
+    if (isExpanded) {
+      mobileMenu?.classList.remove("hidden");
+      openIcon?.classList.add("hidden");
+      closeIcon?.classList.remove("hidden");
+    } else {
+      mobileMenu?.classList.add("hidden");
+      openIcon?.classList.remove("hidden");
+      closeIcon?.classList.add("hidden");
+    }
+  }
+
+  mobileMenuBtn?.addEventListener("click", toggleMenu);
+
+  mobileNavLinks.forEach(link => {
+    link.addEventListener("click", () => {
+      mobileMenu?.classList.add("hidden");
+      openIcon?.classList.remove("hidden");
+      closeIcon?.classList.add("hidden");
+    });
+  });
+</script>

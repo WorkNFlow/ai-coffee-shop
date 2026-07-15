@@ -1,0 +1,148 @@
+---
+import "../styles/global.css";
+import ru from "../i18n/ru.json";
+import en from "../i18n/en.json";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "Бухта Coffee Roasters", 
+  description = "Свежеобжаренный кофе собственной обжарки в Калининграде и Зеленоградске. Попробуйте спешелти кофе в приятной атмосфере тихой гавани." 
+} = Astro.props;
+
+// Pass translations to client-side script
+const translationsJson = JSON.stringify({ ru, en });
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    
+    <!-- SEO Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Client-side Translations Setup -->
+    <script is:inline define:vars={{ translationsJson }}>
+      window.__translations = JSON.parse(translationsJson);
+      
+      // Get saved language or default to 'ru'
+      const savedLang = localStorage.getItem("bukhta-lang");
+      window.__currentLang = savedLang === "en" ? "en" : "ru";
+      
+      // Apply correct language class to html
+      document.documentElement.lang = window.__currentLang;
+      
+      // Function to translate the page
+      window.translatePage = function(lang) {
+        window.__currentLang = lang;
+        localStorage.setItem("bukhta-lang", lang);
+        document.documentElement.lang = lang;
+        
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach((el) => {
+          const path = el.getAttribute("data-i18n");
+          if (!path) return;
+          
+          const keys = path.split(".");
+          let text = window.__translations[lang];
+          
+          for (const key of keys) {
+            if (text && typeof text === "object" && key in text) {
+              text = text[key];
+            } else {
+              text = null;
+              break;
+            }
+          }
+          
+          if (typeof text === "string") {
+            if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
+              el.setAttribute("placeholder", text);
+            } else {
+              el.textContent = text;
+            }
+          }
+        });
+
+        // Translate mailto buttons subject and body
+        const mailtoButtons = document.querySelectorAll("[data-mailto-type]");
+        mailtoButtons.forEach((btn) => {
+          const type = btn.getAttribute("data-mailto-type");
+          const email = btn.getAttribute("data-mailto-email") || "hello@bukhta.coffee";
+          
+          let subject = "";
+          let body = "";
+          
+          if (type === "beans") {
+            subject = lang === "ru" ? "Заказ зерна" : "Order coffee beans";
+            body = lang === "ru" ? "Здравствуйте! Я бы хотел заказать кофе в зернах..." : "Hello! I would like to order coffee beans...";
+          } else if (type === "card") {
+            subject = lang === "ru" ? "Подарочная карта" : "Gift card";
+            body = lang === "ru" ? "Здравствуйте! Я бы хотел приобрести подарочную карту..." : "Hello! I would like to purchase a gift card...";
+          } else if (type === "cupping") {
+            subject = lang === "ru" ? "Запись на каппинг" : "Cupping registration";
+            body = lang === "ru" ? "Здравствуйте! Запишите меня, пожалуйста, на ближайший каппинг..." : "Hello! Please sign me up for the next cupping session...";
+          } else if (type === "career") {
+            subject = lang === "ru" ? "Отклик на вакансию" : "Job application";
+            body = lang === "ru" ? "Здравствуйте! Я пишу по поводу вакансии..." : "Hello! I am writing in response to the job vacancy...";
+          }
+          
+          btn.setAttribute("href", `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+        });
+        
+        // Update language switcher active states
+        const switchers = document.querySelectorAll("[data-lang-btn]");
+        switchers.forEach((btn) => {
+          const btnLang = btn.getAttribute("data-lang-btn");
+          if (btnLang === lang) {
+            btn.classList.add("bg-amber-800", "text-white");
+            btn.classList.remove("text-stone-400", "hover:text-stone-200");
+          } else {
+            btn.classList.remove("bg-amber-800", "text-white");
+            btn.classList.add("text-stone-400", "hover:text-stone-200");
+          }
+        });
+      };
+      
+      // Run once content is loaded
+      document.addEventListener("DOMContentLoaded", () => {
+        window.translatePage(window.__currentLang);
+      });
+    </script>
+  </head>
+  <body class="bg-stone-950 text-stone-100 font-sans antialiased selection:bg-amber-800 selection:text-white scroll-smooth">
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    --font-serif: 'Outfit', serif;
+  }
+  
+  body {
+    font-family: var(--font-sans);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+  }
+</style>

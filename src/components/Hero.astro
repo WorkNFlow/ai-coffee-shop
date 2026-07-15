@@ -1,0 +1,58 @@
+---
+import ru from "../i18n/ru.json";
+
+const t = ru.hero;
+---
+
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+  <!-- Gradient background layers -->
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-950/30 via-stone-950 to-stone-950 z-0"></div>
+  <div class="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_40%,#0c0a09_100%)] z-0"></div>
+  
+  <!-- Subtle particle grid or grid design in background -->
+  <div class="absolute inset-0 bg-[linear-gradient(to_right,#1c1917_1px,transparent_1px),linear-gradient(to_bottom,#1c1917_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30 z-0"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="space-y-6 sm:space-y-8 animate-fade-in">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-900/50 bg-amber-950/20 backdrop-blur-sm text-amber-500 text-xs sm:text-sm font-medium tracking-wide">
+        <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+        <span>Свежая обжарка каждый вторник</span>
+      </div>
+      
+      <h1 class="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-tight max-w-4xl mx-auto">
+        <span data-i18n="hero.tagline">{t.tagline}</span>
+      </h1>
+      
+      <p class="text-base sm:text-lg md:text-xl text-stone-400 max-w-2xl mx-auto leading-relaxed">
+        <span data-i18n="hero.subtagline">{t.subtagline}</span>
+      </p>
+      
+      <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a 
+          href="#about" 
+          data-i18n="hero.cta"
+          class="w-full sm:w-auto px-8 py-4 bg-amber-800 hover:bg-amber-700 text-white font-medium rounded-xl shadow-lg shadow-amber-950/50 hover:shadow-amber-950/80 transition-all duration-300 transform hover:-translate-y-0.5 text-center"
+        >
+          {t.cta}
+        </a>
+        <a 
+          href="#menu" 
+          data-i18n="nav.menu"
+          class="w-full sm:w-auto px-8 py-4 bg-stone-900/60 hover:bg-stone-900 border border-stone-850 hover:border-stone-700 text-stone-200 hover:text-white font-medium rounded-xl backdrop-blur-sm transition-all duration-300 text-center"
+        >
+          Меню
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Animated scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-stone-500 hover:text-amber-500 transition-colors duration-300">
+    <a href="#about" aria-label="Scroll down">
+      <svg class="w-6 h-6 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
+    </a>
+  </div>
+</section>
