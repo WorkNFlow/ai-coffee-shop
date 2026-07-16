@@ -1,18 +1,71 @@
 ---
 import ru from "../i18n/ru.json";
+import { contactsData } from "../data/contacts";
 
 const t = ru.footer;
-const currentYear = new Date().getFullYear();
 ---
 
-<footer class="bg-stone-950 border-t border-stone-900 py-12">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-    <div class="font-serif text-lg font-bold tracking-wider text-amber-500 uppercase">Бухта Coffee Roasters</div>
-    <p class="text-stone-500 text-xs sm:text-sm">
-      &copy; 2019–{currentYear} <span data-i18n="footer.rights">{t.rights}</span>
-    </p>
-    <p class="text-stone-600 text-xxs font-mono">
-      Калининград • Зеленоградск
-    </p>
+<footer style="background-color: #021a35;">
+  <div
+    class="w-full flex flex-col md:flex-row justify-between items-center gap-6 py-12 px-4 md:px-[48px] max-w-[1200px] mx-auto"
+  >
+
+    <!-- Brand Logo -->
+    <div class="flex items-center gap-2 mb-6 md:mb-0">
+      <span class="material-symbols-outlined filled" style="color: #ffb94d; font-size: 28px;">sailing</span>
+      <span style="font-family: 'Source Serif 4', Georgia, serif; font-size: 24px; font-weight: 600; line-height: 32px; color: #ffb94d;">Bukhta Coffee Roasters</span>
+    </div>
+
+    <!-- Footer Links -->
+    <div class="flex flex-wrap justify-center gap-6">
+      <a
+        href={contactsData.instagram}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="transition-colors duration-200"
+        style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: #334865; text-decoration: none;"
+        onmouseover="this.style.color='#ffddb2'"
+        onmouseout="this.style.color='#334865'"
+      >
+        Instagram
+      </a>
+      <a
+        href={contactsData.telegram}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="transition-colors duration-200"
+        style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: #334865; text-decoration: none;"
+        onmouseover="this.style.color='#ffddb2'"
+        onmouseout="this.style.color='#334865'"
+      >
+        Telegram
+      </a>
+      <a
+        href={`mailto:${contactsData.email}`}
+        class="transition-colors duration-200"
+        style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: #334865; text-decoration: none;"
+        onmouseover="this.style.color='#ffddb2'"
+        onmouseout="this.style.color='#334865'"
+      >
+        Email
+      </a>
+      <a
+        href={`tel:${contactsData.phone.replace(/\D/g, '')}`}
+        class="transition-colors duration-200"
+        style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: #334865; text-decoration: none;"
+        onmouseover="this.style.color='#ffddb2'"
+        onmouseout="this.style.color='#334865'"
+      >
+        Телефон
+      </a>
+    </div>
+
+    <!-- Copyright -->
+    <div class="mt-6 md:mt-0 text-center md:text-right">
+      <p style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; color: #334865;">
+        © 2019–2026 Бухта Coffee Roasters. <span data-i18n="footer.rights">{t.rights}</span>
+      </p>
+    </div>
+
   </div>
 </footer>

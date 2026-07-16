@@ -3,40 +3,36 @@ import ru from "../i18n/ru.json";
 import { contactsData } from "../data/contacts";
 
 const t = ru.events;
-const email = contactsData.email;
 ---
 
-<section id="events" class="py-24 sm:py-32 relative bg-stone-900/10">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-stone-900/80 to-stone-950/80 border border-stone-850 p-8 sm:p-16 rounded-3xl backdrop-blur-sm max-w-4xl mx-auto text-center space-y-8">
-      
-      <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-amber-950/40 border border-amber-900/50 text-amber-500 mx-auto">
-        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-        </svg>
-      </div>
-      
-      <h2 class="text-3xl sm:text-5xl font-bold tracking-tight text-white">
-        <span data-i18n="events.title">{t.title}</span>
-      </h2>
-      <div class="h-1 w-20 bg-amber-500 rounded-full mx-auto"></div>
-      
-      <p class="text-stone-300 leading-relaxed text-base sm:text-lg max-w-2xl mx-auto">
-        <span data-i18n="events.description">{t.description}</span>
-      </p>
-      
-      <div class="pt-4">
-        <a
-          data-mailto-type="cupping"
-          data-mailto-email={email}
-          data-i18n="events.button"
-          href={`mailto:${email}?subject=${encodeURIComponent("Запись на каппинг")}`}
-          class="inline-block px-8 py-4 bg-amber-800 hover:bg-amber-700 text-white font-medium rounded-xl shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
-        >
-          {t.button}
-        </a>
-      </div>
-      
-    </div>
+<section id="events" class="py-20 px-4 md:px-[48px]" style="background-color: #fbf9f4;">
+  <div class="max-w-[1200px] mx-auto text-center">
+
+    <h2
+      data-i18n="events.title"
+      class="mb-6"
+      style="font-family: 'Source Serif 4', Georgia, serif; font-size: 32px; font-weight: 600; line-height: 40px; color: #021a35;"
+    >
+      {t.title}
+    </h2>
+
+    <p
+      data-i18n="events.description"
+      class="mx-auto mb-10"
+      style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 400; line-height: 28px; color: #44474d; max-width: 42rem;"
+    >
+      {t.description}
+    </p>
+
+    <a
+      href={`mailto:${contactsData.email}?subject=${encodeURIComponent('Запись на каппинг')}`}
+      data-mailto-type="cupping"
+      data-mailto-email={contactsData.email}
+      class="inline-block transition-all duration-300 hover:shadow-md hover:opacity-90"
+      style="background-color: #815500; color: #ffffff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; padding: 16px 32px; border-radius: 9999px; box-shadow: 0 2px 8px rgba(26, 47, 75, 0.12); text-decoration: none;"
+    >
+      <span data-i18n="events.button">{t.button}</span>
+    </a>
+
   </div>
 </section>

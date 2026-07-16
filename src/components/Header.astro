@@ -1,80 +1,130 @@
 ---
 import ru from "../i18n/ru.json";
 
-// Default to Russian values for static SSR
 const t = ru.nav;
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 bg-stone-950/80 backdrop-blur-md border-b border-stone-900 transition-all duration-300">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-20">
-      <!-- Logo -->
-      <div class="flex-shrink-0">
-        <a href="#" class="flex items-center gap-2">
-          <span class="font-serif text-2xl font-bold tracking-wider text-amber-500 uppercase">Бухта</span>
-          <span class="text-stone-500 text-xs hidden sm:inline-block tracking-widest font-mono">COFFEE ROASTERS</span>
-        </a>
-      </div>
+<nav class="bg-surface-container-low/80 backdrop-blur-md sticky top-0 z-50 shadow-sm" style="background-color: rgba(245, 243, 238, 0.85);">
+  <div class="flex justify-between items-center w-full px-4 md:px-[48px] max-w-[1200px] mx-auto h-20">
 
-      <!-- Desktop Nav -->
-      <nav class="hidden md:flex space-x-8 items-center">
-        <a href="#about" data-i18n="nav.about" class="text-stone-300 hover:text-amber-500 px-3 py-2 text-sm font-medium transition-colors">{t.about}</a>
-        <a href="#menu" data-i18n="nav.menu" class="text-stone-300 hover:text-amber-500 px-3 py-2 text-sm font-medium transition-colors">{t.menu}</a>
-        <a href="#roasting" data-i18n="nav.roasting" class="text-stone-300 hover:text-amber-500 px-3 py-2 text-sm font-medium transition-colors">{t.roasting}</a>
-        <a href="#locations" data-i18n="nav.locations" class="text-stone-300 hover:text-amber-500 px-3 py-2 text-sm font-medium transition-colors">{t.locations}</a>
-        <a href="#events" data-i18n="nav.events" class="text-stone-300 hover:text-amber-500 px-3 py-2 text-sm font-medium transition-colors">{t.events}</a>
-        <a href="#careers" data-i18n="nav.careers" class="text-stone-300 hover:text-amber-500 px-3 py-2 text-sm font-medium transition-colors">{t.careers}</a>
-        <a href="#contact" data-i18n="nav.contact" class="text-stone-300 hover:text-amber-500 px-3 py-2 text-sm font-medium transition-colors">{t.contact}</a>
-      </nav>
+    <!-- Brand Logo -->
+    <a href="#" class="font-headline-sm text-primary flex items-center gap-2 no-underline hover:opacity-80 transition-opacity">
+      <span class="material-symbols-outlined filled" style="color: #815500; font-size: 28px;">sailing</span>
+      <span style="font-family: 'Source Serif 4', Georgia, serif; font-size: 20px; font-weight: 700; color: #021a35;">Бухта Coffee Roasters</span>
+    </a>
 
-      <!-- Language Switcher & Mobile Menu Trigger -->
-      <div class="flex items-center gap-4">
-        <!-- Language Switcher -->
-        <div class="flex border border-stone-800 rounded-lg p-0.5 bg-stone-900">
-          <button 
-            data-lang-btn="ru" 
-            onclick="window.translatePage('ru')" 
-            class="px-3 py-1 text-xs font-semibold rounded-md transition-all bg-amber-800 text-white"
-          >
-            RU
-          </button>
-          <button 
-            data-lang-btn="en" 
-            onclick="window.translatePage('en')" 
-            class="px-3 py-1 text-xs font-semibold rounded-md transition-all text-stone-400 hover:text-stone-200"
-          >
-            EN
-          </button>
-        </div>
+    <!-- Desktop Navigation Links -->
+    <div class="hidden md:flex gap-1 items-center">
+      <a href="#history"
+         data-i18n="nav.about"
+         class="font-label-md px-3 py-2 rounded-lg transition-all duration-300 hover:bg-surface-container"
+         style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: #44474d;"
+         onmouseover="this.style.color='#021a35'"
+         onmouseout="this.style.color='#44474d'">
+        {t.about}
+      </a>
+      <a href="#menu"
+         data-i18n="nav.menu"
+         class="font-label-md px-3 py-2 rounded-lg transition-all duration-300 hover:bg-surface-container"
+         style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: #44474d;"
+         onmouseover="this.style.color='#021a35'"
+         onmouseout="this.style.color='#44474d'">
+        {t.menu}
+      </a>
+      <a href="#roasting"
+         data-i18n="nav.roasting"
+         class="font-label-md px-3 py-2 rounded-lg transition-all duration-300 hover:bg-surface-container"
+         style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: #44474d;"
+         onmouseover="this.style.color='#021a35'"
+         onmouseout="this.style.color='#44474d'">
+        {t.roasting}
+      </a>
+      <a href="#locations"
+         data-i18n="nav.locations"
+         class="font-label-md px-3 py-2 rounded-lg transition-all duration-300 hover:bg-surface-container"
+         style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: #44474d;"
+         onmouseover="this.style.color='#021a35'"
+         onmouseout="this.style.color='#44474d'">
+        {t.locations}
+      </a>
+      <a href="#events"
+         data-i18n="nav.events"
+         class="font-label-md px-3 py-2 rounded-lg transition-all duration-300 hover:bg-surface-container"
+         style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: #44474d;"
+         onmouseover="this.style.color='#021a35'"
+         onmouseout="this.style.color='#44474d'">
+        {t.events}
+      </a>
+      <a href="#careers"
+         data-i18n="nav.careers"
+         class="font-label-md px-3 py-2 rounded-lg transition-all duration-300 hover:bg-surface-container"
+         style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: #44474d;"
+         onmouseover="this.style.color='#021a35'"
+         onmouseout="this.style.color='#44474d'">
+        {t.careers}
+      </a>
+      <a href="#contact"
+         data-i18n="nav.contact"
+         class="font-label-md px-3 py-2 rounded-lg transition-all duration-300 hover:bg-surface-container"
+         style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: #44474d;"
+         onmouseover="this.style.color='#021a35'"
+         onmouseout="this.style.color='#44474d'">
+        {t.contact}
+      </a>
+    </div>
 
-        <!-- Mobile menu button -->
-        <button 
-          id="mobile-menu-btn"
-          type="button" 
-          class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-stone-400 hover:text-amber-500 hover:bg-stone-900 focus:outline-none"
+    <!-- Right side: Language switcher + mobile menu -->
+    <div class="flex items-center gap-3">
+      <!-- Language Switcher -->
+      <div class="flex items-center gap-1">
+        <button
+          id="lang-ru"
+          data-lang-btn="ru"
+          onclick="window.translatePage('ru')"
+          class="font-label-md px-2 py-1 transition-all duration-200 border-b-2 border-primary text-primary font-bold"
+          style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.05em; color: #021a35; border-bottom: 2px solid #021a35;"
         >
-          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
+          RU
+        </button>
+        <span style="color: #c4c6ce; font-size: 14px;">/</span>
+        <button
+          id="lang-en"
+          data-lang-btn="en"
+          onclick="window.translatePage('en')"
+          class="font-label-md px-2 py-1 transition-all duration-200"
+          style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: #44474d; border-bottom: 2px solid transparent;"
+        >
+          EN
         </button>
       </div>
+
+      <!-- Mobile menu button -->
+      <button
+        id="mobile-menu-btn"
+        type="button"
+        class="md:hidden inline-flex items-center justify-center p-2 rounded-md transition-colors"
+        style="color: #44474d;"
+        aria-label="Открыть меню"
+      >
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
     </div>
   </div>
 
   <!-- Mobile Menu -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-stone-900 bg-stone-950/95 backdrop-blur-lg">
-    <div class="px-2 pt-2 pb-4 space-y-1 sm:px-3">
-      <a href="#about" data-i18n="nav.about" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-stone-300 hover:text-amber-500 hover:bg-stone-900 transition-all">{t.about}</a>
-      <a href="#menu" data-i18n="nav.menu" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-stone-300 hover:text-amber-500 hover:bg-stone-900 transition-all">{t.menu}</a>
-      <a href="#roasting" data-i18n="nav.roasting" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-stone-300 hover:text-amber-500 hover:bg-stone-900 transition-all">{t.roasting}</a>
-      <a href="#locations" data-i18n="nav.locations" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-stone-300 hover:text-amber-500 hover:bg-stone-900 transition-all">{t.locations}</a>
-      <a href="#events" data-i18n="nav.events" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-stone-300 hover:text-amber-500 hover:bg-stone-900 transition-all">{t.events}</a>
-      <a href="#careers" data-i18n="nav.careers" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-stone-300 hover:text-amber-500 hover:bg-stone-900 transition-all">{t.careers}</a>
-      <a href="#contact" data-i18n="nav.contact" class="mobile-nav-link block px-3 py-2.5 rounded-md text-base font-medium text-stone-300 hover:text-amber-500 hover:bg-stone-900 transition-all">{t.contact}</a>
-    </div>
+  <div id="mobile-menu" class="hidden md:hidden border-t px-4 pb-4 pt-2" style="border-color: #e4e2dd; background-color: rgba(245, 243, 238, 0.97);">
+    <a href="#history" data-i18n="nav.about" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-base font-medium transition-all" style="color: #44474d;">{t.about}</a>
+    <a href="#menu" data-i18n="nav.menu" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-base font-medium transition-all" style="color: #44474d;">{t.menu}</a>
+    <a href="#roasting" data-i18n="nav.roasting" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-base font-medium transition-all" style="color: #44474d;">{t.roasting}</a>
+    <a href="#locations" data-i18n="nav.locations" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-base font-medium transition-all" style="color: #44474d;">{t.locations}</a>
+    <a href="#events" data-i18n="nav.events" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-base font-medium transition-all" style="color: #44474d;">{t.events}</a>
+    <a href="#careers" data-i18n="nav.careers" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-base font-medium transition-all" style="color: #44474d;">{t.careers}</a>
+    <a href="#contact" data-i18n="nav.contact" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-base font-medium transition-all" style="color: #44474d;">{t.contact}</a>
   </div>
-</header>
+</nav>
 
 <script>
   const mobileMenuBtn = document.getElementById("mobile-menu-btn");
@@ -84,8 +134,8 @@ const t = ru.nav;
   const mobileNavLinks = document.querySelectorAll(".mobile-nav-link");
 
   function toggleMenu() {
-    const isExpanded = mobileMenu?.classList.contains("hidden");
-    if (isExpanded) {
+    const isHidden = mobileMenu?.classList.contains("hidden");
+    if (isHidden) {
       mobileMenu?.classList.remove("hidden");
       openIcon?.classList.add("hidden");
       closeIcon?.classList.remove("hidden");
