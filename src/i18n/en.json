@@ -26,7 +26,7 @@
     "title": "Our Menu",
     "subtitle": "All drinks are made from freshly roasted beans. The menu is updated manually.",
     "espresso_base": "Espresso Bar",
-    "alternative": "Alternative Brewing (V60, Chemex, Aeropress)",
+    "alternative": "Alternative Brewing",
     "food": "Pastries & Breakfast",
     "order_button": "Order Coffee Beans"
   },
@@ -46,7 +46,8 @@
     "route": "Get Route",
     "opening_hours": "Opening hours:",
     "status_soon": "Opening Soon",
-    "soon_desc": "Zelenogradsk — Fall 2026. Looking forward to welcoming you right by the seaside!"
+    "soon_desc": "Zelenogradsk — Fall 2026. Looking forward to welcoming you right by the seaside!",
+    "map_title": "Bukhta Coffee Shops Map"
   },
   "events": {
     "title": "Cuppings & Classes",

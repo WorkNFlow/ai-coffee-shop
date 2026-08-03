@@ -79,6 +79,8 @@ const translationsJson = JSON.stringify({ ru, en });
           if (typeof text === "string") {
             if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
               el.setAttribute("placeholder", text);
+            } else if (el.tagName === "IFRAME") {
+              el.setAttribute("title", text);
             } else {
               el.textContent = text;
             }
@@ -113,16 +115,16 @@ const translationsJson = JSON.stringify({ ru, en });
 
         // Update language switcher active states
         // Active lang: bold text + bottom border in primary navy
-        // Inactive: muted text, no border
+        // Inactive: muted text, transparent border
         const switchers = document.querySelectorAll("[data-lang-btn]");
         switchers.forEach((btn) => {
           const btnLang = btn.getAttribute("data-lang-btn");
           if (btnLang === lang) {
-            btn.classList.add("text-primary", "border-b-2", "border-primary", "font-bold");
-            btn.classList.remove("text-on-surface-variant");
+            btn.classList.add("text-primary", "border-primary", "font-bold");
+            btn.classList.remove("text-on-surface-variant", "border-transparent");
           } else {
-            btn.classList.remove("text-primary", "border-b-2", "border-primary", "font-bold");
-            btn.classList.add("text-on-surface-variant");
+            btn.classList.remove("text-primary", "border-primary", "font-bold");
+            btn.classList.add("text-on-surface-variant", "border-transparent");
           }
         });
       };

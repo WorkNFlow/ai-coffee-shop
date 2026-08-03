@@ -1,6 +1,7 @@
 ---
 import ru from "../i18n/ru.json";
 import { contactsData } from "../data/contacts";
+import { InteractiveHoverButton } from "./ui/interactive-hover-button";
 
 const t = ru.events;
 ---
@@ -24,15 +25,16 @@ const t = ru.events;
       {t.description}
     </p>
 
-    <a
+    <InteractiveHoverButton
+      client:load
       href={`mailto:${contactsData.email}?subject=${encodeURIComponent('Запись на каппинг')}`}
       data-mailto-type="cupping"
       data-mailto-email={contactsData.email}
-      class="inline-block transition-all duration-300 hover:shadow-md hover:opacity-90"
-      style="background-color: #815500; color: #ffffff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; padding: 16px 32px; border-radius: 9999px; box-shadow: 0 2px 8px rgba(26, 47, 75, 0.12); text-decoration: none;"
-    >
-      <span data-i18n="events.button">{t.button}</span>
-    </a>
+      text={t.button}
+      data-i18n="events.button"
+      variant="secondary"
+      className="shadow-md hover:scale-105 transition-transform duration-300"
+    />
 
   </div>
 </section>

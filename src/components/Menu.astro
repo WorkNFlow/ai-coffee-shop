@@ -2,6 +2,7 @@
 import ru from "../i18n/ru.json";
 import { menuData } from "../data/menu";
 import { contactsData } from "../data/contacts";
+import { InteractiveHoverButton } from "./ui/interactive-hover-button";
 
 const t = ru.menu;
 ---
@@ -27,7 +28,7 @@ const t = ru.menu;
     </div>
 
     <!-- Menu Grid: Espresso | Alternative + Food -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 mb-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 mb-16 items-start">
 
       <!-- Left Column: Espresso Base -->
       <div>
@@ -93,16 +94,16 @@ const t = ru.menu;
 
     <!-- Order Button -->
     <div class="text-center">
-      <a
+      <InteractiveHoverButton
+        client:load
         href={`mailto:${contactsData.email}?subject=${encodeURIComponent('Заказ зерна')}`}
         data-mailto-type="beans"
         data-mailto-email={contactsData.email}
-        class="inline-flex items-center gap-2 transition-all duration-300 hover:opacity-90 hover:shadow-md"
-        style="background-color: #815500; color: #ffffff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; padding: 16px 32px; border-radius: 9999px; box-shadow: 0 2px 8px rgba(26, 47, 75, 0.12); text-decoration: none;"
-      >
-        <span class="material-symbols-outlined" style="font-size: 20px;">shopping_bag</span>
-        <span data-i18n="menu.order_button">{t.order_button}</span>
-      </a>
+        text={t.order_button}
+        data-i18n="menu.order_button"
+        variant="secondary"
+        className="shadow-md hover:scale-105 transition-transform duration-300"
+      />
     </div>
 
   </div>
