@@ -38,14 +38,15 @@ const t = ru.menu;
         </h3>
         <ul class="space-y-6">
           {menuData[0].items.map((item) => (
-            <li class="flex justify-between items-baseline pb-2" style="border-bottom: 1px dashed #e4e2dd;">
+            <li class="flex justify-between items-baseline">
               <span
                 data-i18n={`menu_items.${item.id}.name`}
-                style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: #021a35;"
+                style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.03em; color: #021a35;"
               >
                 {item.name.ru}
               </span>
-              <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; color: #44474d;">
+              <span class="flex-grow border-b border-dotted border-[#c4c6ce] mx-3 mb-1"></span>
+              <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 600; color: #815500;">
                 {item.price}
               </span>
             </li>
@@ -61,11 +62,12 @@ const t = ru.menu;
         </h3>
         <ul class="space-y-6 mb-12">
           {menuData[1].items.map((item) => (
-            <li class="flex justify-between items-baseline pb-2" style="border-bottom: 1px dashed #e4e2dd;">
-              <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: #021a35;">
+            <li class="flex justify-between items-baseline">
+              <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.03em; color: #021a35;">
                 {item.name.ru}
               </span>
-              <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; color: #44474d;">
+              <span class="flex-grow border-b border-dotted border-[#c4c6ce] mx-3 mb-1"></span>
+              <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 600; color: #815500;">
                 {item.price}
               </span>
             </li>
@@ -78,11 +80,12 @@ const t = ru.menu;
         </h3>
         <ul class="space-y-6">
           {menuData[2].items.map((item) => (
-            <li class="flex justify-between items-baseline pb-2" style="border-bottom: 1px dashed #e4e2dd;">
-              <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: #021a35;">
+            <li class="flex justify-between items-baseline">
+              <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.03em; color: #021a35;">
                 {item.name.ru}
               </span>
-              <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; color: #44474d;">
+              <span class="flex-grow border-b border-dotted border-[#c4c6ce] mx-3 mb-1"></span>
+              <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 600; color: #815500;">
                 {item.price}
               </span>
             </li>
