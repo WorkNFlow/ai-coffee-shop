@@ -1,5 +1,6 @@
 {
   "nav": {
+    "brand": "Bukhta Coffee Roasters",
     "about": "Story",
     "menu": "Menu",
     "roasting": "Roasting",
@@ -9,9 +10,11 @@
     "contact": "Contact"
   },
   "hero": {
+    "brand": "Bukhta Coffee Roasters",
     "tagline": "A Quiet Haven in the World of Coffee",
     "subtagline": "Freshly roasted coffee by our own roastery on the Baltic coast. A place where everyone feels warm and cozy.",
-    "cta": "Learn More"
+    "cta": "Learn More",
+    "words": ["freshly roasted", "coffee", "on the", "baltic", "coast"]
   },
   "about": {
     "title": "The Story of Bukhta",

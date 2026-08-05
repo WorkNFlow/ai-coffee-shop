@@ -4,13 +4,13 @@ import ru from "../i18n/ru.json";
 const t = ru.nav;
 ---
 
-<nav class="bg-surface-container-low/80 backdrop-blur-md sticky top-0 z-50 shadow-sm" style="background-color: rgba(245, 243, 238, 0.85);">
+<nav id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 transform -translate-y-full opacity-0 pointer-events-none shadow-md" style="background-color: rgba(245, 243, 238, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
   <div class="flex justify-between items-center w-full px-4 md:px-[48px] max-w-[1200px] mx-auto h-20">
 
     <!-- Brand Logo -->
     <a href="#" class="font-headline-sm text-primary flex items-center gap-2 no-underline hover:opacity-80 transition-opacity">
       <span class="material-symbols-outlined filled" style="color: #815500; font-size: 28px;">sailing</span>
-      <span style="font-family: 'Source Serif 4', Georgia, serif; font-size: 20px; font-weight: 700; color: #021a35;">Бухта Coffee Roasters</span>
+      <span data-i18n="nav.brand" style="font-family: 'Source Serif 4', Georgia, serif; font-size: 20px; font-weight: 700; color: #021a35;">Бухта Coffee Roasters</span>
     </a>
 
     <!-- Desktop Navigation Links -->

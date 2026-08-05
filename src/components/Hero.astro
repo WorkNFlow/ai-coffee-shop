@@ -3,50 +3,287 @@ import ru from "../i18n/ru.json";
 import { InteractiveHoverButton } from "./ui/interactive-hover-button";
 
 const t = ru.hero;
+
+// Words sequence as requested: "свежеобжаренный", "кофе", "на", "балтийском", "побережье"
+const words = ["свежеобжаренный", "кофе", "на", "балтийском", "побережье"];
 ---
 
-<header
-  id="hero"
-  class="relative w-full flex items-center justify-center overflow-hidden"
-  style="min-height: 600px; height: 819px; background-color: #1a2f4b;"
->
-  <!-- Background Image -->
-  <div
-    class="absolute inset-0 z-0 bg-cover bg-center"
-    style="background-image: url('/images/hero/roastery.jpg'); opacity: 0.4; mix-blend-mode: overlay;"
-    role="img"
-    aria-label="Панорама кофейной обжарочной у Балтийского моря"
-  ></div>
+<!-- Sticky/Pinned Hero Container -->
+<section id="hero-scroll-wrapper" class="relative w-full" style="height: 500vh;">
+  <div id="hero-pinned-container" class="sticky top-0 left-0 w-full h-screen overflow-hidden bg-[#0a1628] flex items-center justify-center">
+    
+    <!-- Canvas for Image Sequence -->
+    <canvas id="hero-canvas" class="absolute inset-0 w-full h-full object-cover z-0"></canvas>
 
-  <!-- Gradient Overlay -->
-  <div
-    class="absolute inset-0 z-0"
-    style="background: linear-gradient(to top, #1a2f4b 0%, transparent 100%); opacity: 0.8;"
-  ></div>
+    <!-- Dark Overlay for Readability -->
+    <div class="absolute inset-0 z-10 bg-black/45 backdrop-brightness-90 pointer-events-none"></div>
 
-  <!-- Content -->
-  <div class="relative z-10 text-center px-4 md:px-[48px] max-w-[1200px] mx-auto">
-    <h1
-      data-i18n="hero.tagline"
-      class="mb-6"
-      style="font-family: 'Source Serif 4', Georgia, serif; font-size: clamp(32px, 5vw, 48px); font-weight: 700; line-height: 1.17; letter-spacing: -0.02em; color: #ffffff;"
+    <!-- Title Overlay (Initial State: Visible at start) -->
+    <div
+      id="hero-initial-title"
+      class="relative z-20 text-center px-4 max-w-4xl transition-all duration-300 transform translate-y-0 opacity-100"
     >
-      {t.tagline}
-    </h1>
-    <p
-      data-i18n="hero.subtagline"
-      class="mx-auto mb-10"
-      style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 400; line-height: 28px; color: #8397b8; max-width: 42rem;"
+      <h1 data-i18n="hero.brand" class="font-headline-lg text-white font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight drop-shadow-lg mb-4">
+        Бухта Coffee Roasters
+      </h1>
+      <p data-i18n="hero.subtagline" class="text-white/80 text-lg md:text-xl font-light tracking-wide max-w-xl mx-auto">
+        Тихая гавань спешелти кофе
+      </p>
+      <div class="mt-8 flex justify-center animate-bounce opacity-75">
+        <span class="material-symbols-outlined text-white text-3xl">keyboard_double_arrow_down</span>
+      </div>
+    </div>
+
+    <!-- Animated Words Container (Appears during scroll) -->
+    <div
+      id="hero-words-container"
+      class="absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-4"
     >
-      {t.subtagline}
-    </p>
-    <InteractiveHoverButton
-      client:load
-      href="#history"
-      text={t.cta}
-      data-i18n="hero.cta"
-      variant="secondary"
-      className="shadow-lg hover:scale-105 transition-transform duration-300"
-    />
+      {words.map((word, index) => (
+        <span
+          data-hero-word={index}
+          data-i18n={`hero.words.${index}`}
+          class="hero-word absolute text-center font-serif text-4xl sm:text-6xl md:text-8xl font-black text-white tracking-wider drop-shadow-2xl opacity-0 transform translate-y-12"
+          style="text-shadow: 0 4px 30px rgba(0,0,0,0.9); will-change: transform, opacity;"
+        >
+          {word}
+        </span>
+      ))}
+    </div>
+
+    <!-- Final CTA Overlay (Appears towards the end of sequence) -->
+    <div
+      id="hero-final-cta"
+      class="absolute z-30 text-center px-4 max-w-2xl transition-all duration-500 transform translate-y-12 opacity-0 pointer-events-none"
+    >
+      <h2
+        data-i18n="hero.tagline"
+        class="text-3xl md:text-5xl font-bold text-white mb-6 font-serif leading-tight drop-shadow-md"
+      >
+        {t.tagline}
+      </h2>
+      <p
+        data-i18n="hero.subtagline"
+        class="text-white/90 text-base md:text-lg mb-8 max-w-lg mx-auto font-sans leading-relaxed drop-shadow"
+      >
+        {t.subtagline}
+      </p>
+      <div class="pointer-events-auto inline-block">
+        <InteractiveHoverButton
+          client:load
+          href="#history"
+          text={t.cta}
+          data-i18n="hero.cta"
+          variant="white"
+          className="shadow-2xl hover:scale-105 transition-transform duration-300 border-2 bg-white/10 backdrop-blur-sm"
+        />
+      </div>
+    </div>
+
   </div>
-</header>
+</section>
+
+<script>
+  // New Frames Configuration: Cup_filling_with_coffee_and_202608031229_003.jpg -> _093.jpg (91 frames)
+  const START_FRAME = 3;
+  const END_FRAME = 93;
+  const TOTAL_FRAMES = END_FRAME - START_FRAME + 1; // 91 frames
+  const FRAME_PREFIX = "/hero-sequence/Cup_filling_with_coffee_and_202608031229_";
+  const FRAME_EXT = ".jpg";
+
+  const wrapper = document.getElementById("hero-scroll-wrapper");
+  const canvas = document.getElementById("hero-canvas") as HTMLCanvasElement | null;
+  const header = document.getElementById("main-header");
+  const initialTitle = document.getElementById("hero-initial-title");
+  const wordElements = document.querySelectorAll<HTMLElement>("[data-hero-word]");
+  const finalCta = document.getElementById("hero-final-cta");
+
+  if (canvas && wrapper) {
+    const ctx = canvas.getContext("2d");
+    const images: HTMLImageElement[] = [];
+    let currentFrameIndex = -1;
+
+    // Helper: format index to 3 digits (e.g. 3 -> 003)
+    const getFrameUrl = (frameNum: number) => {
+      const padded = String(frameNum).padStart(3, "0");
+      return `${FRAME_PREFIX}${padded}${FRAME_EXT}`;
+    };
+
+    // Preload first image for instant render
+    const firstImg = new Image();
+    firstImg.src = getFrameUrl(START_FRAME);
+    firstImg.onload = () => {
+      renderFrame(firstImg);
+    };
+
+    // Preload remaining frames
+    for (let i = START_FRAME; i <= END_FRAME; i++) {
+      const img = new Image();
+      img.src = getFrameUrl(i);
+      images.push(img);
+    }
+
+    // Canvas render with object-fit: cover logic
+    function renderFrame(img: HTMLImageElement) {
+      if (!ctx || !canvas) return;
+
+      const windowWidth = window.innerWidth;
+      const windowHeight = window.innerHeight;
+
+      if (canvas.width !== windowWidth || canvas.height !== windowHeight) {
+        canvas.width = windowWidth;
+        canvas.height = windowHeight;
+      }
+
+      if (!img.complete || img.naturalWidth === 0) return;
+
+      const imgRatio = img.naturalWidth / img.naturalHeight;
+      const canvasRatio = canvas.width / canvas.height;
+
+      let drawWidth = canvas.width;
+      let drawHeight = canvas.height;
+      let offsetX = 0;
+      let offsetY = 0;
+
+      if (canvasRatio > imgRatio) {
+        drawHeight = canvas.width / imgRatio;
+        offsetY = (canvas.height - drawHeight) / 2;
+      } else {
+        drawWidth = canvas.height * imgRatio;
+        offsetX = (canvas.width - drawWidth) / 2;
+      }
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+    }
+
+    // Smooth lerp function for butter-smooth word transitions
+    function lerp(start: number, end: number, t: number) {
+      return start + (end - start) * t;
+    }
+
+    let requestAnimationFrameId: number | null = null;
+
+    // Scroll Handler
+    function handleScroll() {
+      if (!wrapper) return;
+
+      const rect = wrapper.getBoundingClientRect();
+      const scrollableHeight = wrapper.clientHeight - window.innerHeight;
+      
+      // Calculate progress from 0.0 to 1.0
+      const progress = Math.max(0, Math.min(1, -rect.top / scrollableHeight));
+
+      // 1. Header Visibility: Header ONLY appears AFTER finishing the hero sequence (progress >= 0.96)
+      if (header) {
+        if (progress >= 0.96) {
+          header.classList.remove("-translate-y-full", "opacity-0", "pointer-events-none");
+          header.classList.add("translate-y-0", "opacity-100", "pointer-events-auto");
+        } else {
+          header.classList.add("-translate-y-full", "opacity-0", "pointer-events-none");
+          header.classList.remove("translate-y-0", "opacity-100", "pointer-events-auto");
+        }
+      }
+
+      // 2. Initial Title Fade Out (0.00 -> 0.08)
+      if (initialTitle) {
+        if (progress > 0.02) {
+          const fadeOpacity = Math.max(0, 1 - (progress - 0.02) / 0.06);
+          const translateY = (progress - 0.02) * -300;
+          initialTitle.style.opacity = fadeOpacity.toFixed(2);
+          initialTitle.style.transform = `translateY(${translateY.toFixed(1)}px)`;
+        } else {
+          initialTitle.style.opacity = "1";
+          initialTitle.style.transform = "translateY(0px)";
+        }
+      }
+
+      // 3. Canvas Frame Sequence Update
+      const frameIndex = Math.min(
+        TOTAL_FRAMES - 1,
+        Math.floor(progress * TOTAL_FRAMES)
+      );
+
+      if (frameIndex !== currentFrameIndex) {
+        currentFrameIndex = frameIndex;
+        const frameImg = images[frameIndex];
+        if (frameImg && frameImg.complete) {
+          renderFrame(frameImg);
+        }
+      }
+
+      // 4. Smooth Word Sequence Animation ("свежеобжаренный", "кофе", "на", "балтийском", "побережье")
+      // Words progress window: 0.10 to 0.78
+      const wordsStart = 0.10;
+      const wordsEnd = 0.78;
+      const totalWords = wordElements.length; // 5
+
+      if (progress >= wordsStart && progress <= wordsEnd) {
+        const wordsProgress = (progress - wordsStart) / (wordsEnd - wordsStart);
+        const wordFocusIndex = wordsProgress * totalWords;
+
+        wordElements.forEach((el, index) => {
+          const offset = wordFocusIndex - (index + 0.5);
+
+          // Tighter window (0.55) so only ONE word is visible at a time
+          if (Math.abs(offset) < 0.55) {
+            // Sharper fade in/out bell curve
+            const rawOpacity = 1 - Math.pow(offset / 0.5, 2);
+            const opacity = Math.max(0, Math.min(1, rawOpacity));
+
+            // Wider vertical movement (-160px to +160px) for greater distance
+            const translateY = -offset * 320;
+            const scale = 1 + (1 - Math.abs(offset) * 1.8) * 0.08;
+
+            el.style.opacity = opacity.toFixed(3);
+            el.style.transform = `translateY(${translateY.toFixed(1)}px) scale(${Math.max(0.95, scale).toFixed(2)})`;
+          } else {
+            el.style.opacity = "0";
+            el.style.transform = offset < 0 ? "translateY(160px) scale(0.9)" : "translateY(-160px) scale(1.1)";
+          }
+        });
+      } else {
+        wordElements.forEach((el) => {
+          el.style.opacity = "0";
+          el.style.transform = "translateY(160px) scale(0.9)";
+        });
+      }
+
+      // 5. Final CTA fade-in at the end of sequence (0.80 -> 0.95)
+      if (finalCta) {
+        if (progress > 0.80) {
+          const ctaOpacity = Math.min(1, (progress - 0.80) / 0.15);
+          finalCta.style.opacity = ctaOpacity.toFixed(2);
+          finalCta.style.transform = `translateY(${(1 - ctaOpacity) * 30}px)`;
+          finalCta.classList.remove("pointer-events-none");
+          finalCta.classList.add("pointer-events-auto");
+        } else {
+          finalCta.style.opacity = "0";
+          finalCta.style.transform = "translateY(30px)";
+          finalCta.classList.add("pointer-events-none");
+          finalCta.classList.remove("pointer-events-auto");
+        }
+      }
+    }
+
+    // Throttled Scroll Listener using RequestAnimationFrame
+    function onScroll() {
+      if (!requestAnimationFrameId) {
+        requestAnimationFrameId = requestAnimationFrame(() => {
+          handleScroll();
+          requestAnimationFrameId = null;
+        });
+      }
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", () => {
+      if (images[currentFrameIndex]) {
+        renderFrame(images[currentFrameIndex]);
+      }
+    });
+
+    // Trigger initial render
+    handleScroll();
+  }
+</script>
