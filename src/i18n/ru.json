@@ -69,7 +69,22 @@
     "title": "Связаться с нами",
     "hours_title": "Время работы",
     "phone_title": "Телефон",
-    "email_title": "Электронная почта"
+    "email_title": "Электронная почта",
+    "social_title": "Соцсети"
+  },
+  "modal": {
+    "name_label": "Ваше имя",
+    "name_placeholder": "Как вас зовут?",
+    "email_label": "Электронная почта",
+    "email_placeholder": "your@email.com",
+    "message_label": "Сообщение",
+    "message_placeholder": "Напишите ваш вопрос или пожелание...",
+    "submit": "Отправить",
+    "submitting": "Отправка...",
+    "success_title": "Сообщение отправлено!",
+    "success_text": "Мы получили ваше письмо и ответим в течение одного рабочего дня.",
+    "error_text": "Что-то пошло не так. Попробуйте ещё раз или напишите нам напрямую на hello@bukhta.coffee.",
+    "close": "Закрыть"
   },
   "footer": {
     "rights": "Все права защищены."

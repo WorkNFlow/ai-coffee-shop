@@ -69,7 +69,22 @@
     "title": "Get in touch",
     "hours_title": "Working Hours",
     "phone_title": "Phone",
-    "email_title": "Email"
+    "email_title": "Email",
+    "social_title": "Social Media"
+  },
+  "modal": {
+    "name_label": "Your Name",
+    "name_placeholder": "How should we call you?",
+    "email_label": "Email",
+    "email_placeholder": "your@email.com",
+    "message_label": "Message",
+    "message_placeholder": "Write your question or request...",
+    "submit": "Send Message",
+    "submitting": "Sending...",
+    "success_title": "Message Sent!",
+    "success_text": "We received your message and will reply within one business day.",
+    "error_text": "Something went wrong. Please try again or email us directly at hello@bukhta.coffee.",
+    "close": "Close"
   },
   "footer": {
     "rights": "All rights reserved."
