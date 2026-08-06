@@ -1,7 +1,6 @@
 ---
 import ru from "../i18n/ru.json";
-import { contactsData } from "../data/contacts";
-import { InteractiveHoverButton } from "./ui/interactive-hover-button";
+import { ModalButton } from "./ui/ModalButton";
 
 const t = ru.roasting;
 ---
@@ -49,23 +48,21 @@ const t = ru.roasting;
 
         <!-- Action Buttons -->
         <div class="flex flex-wrap gap-4">
-          <InteractiveHoverButton
+          <ModalButton
             client:load
-            href={`mailto:${contactsData.email}?subject=${encodeURIComponent('Заказ зерна')}`}
-            data-mailto-type="beans"
-            data-mailto-email={contactsData.email}
-            text={t.order_beans}
-            data-i18n="roasting.order_beans"
+            subjectRu="Заказ зерна"
+            subjectEn="Order coffee beans"
+            labelRu={t.order_beans}
+            labelEn="Order Coffee Beans"
             variant="white"
             className="shadow-sm hover:scale-105 transition-transform duration-300"
           />
-          <InteractiveHoverButton
+          <ModalButton
             client:load
-            href={`mailto:${contactsData.email}?subject=${encodeURIComponent('Подарочная карта')}`}
-            data-mailto-type="card"
-            data-mailto-email={contactsData.email}
-            text={t.order_gift_card}
-            data-i18n="roasting.order_gift_card"
+            subjectRu="Подарочная карта"
+            subjectEn="Gift card"
+            labelRu={t.order_gift_card}
+            labelEn="Buy a Gift Card"
             variant="white"
             className="shadow-sm hover:scale-105 transition-transform duration-300 border-2 bg-white/10 backdrop-blur-sm"
           />

@@ -3,7 +3,6 @@ import ru from "../i18n/ru.json";
 import { locationsData } from "../data/locations";
 
 const t = ru.locations;
-const lang = "ru";
 ---
 
 <section id="locations" class="py-20 px-4 md:px-[48px]" style="background-color: #f5f3ee;">
@@ -27,17 +26,31 @@ const lang = "ru";
             style="background-color: #ffffff; border-radius: 1rem; box-shadow: 0 1px 4px rgba(26, 47, 75, 0.08); border: 1px solid rgba(196, 198, 206, 0.2);"
           >
             <h3
+              data-location-name-ru={location.name.ru}
+              data-location-name-en={location.name.en}
               class="mb-2"
               style="font-family: 'Source Serif 4', Georgia, serif; font-size: 24px; font-weight: 600; line-height: 32px; color: #021a35;"
             >
-              {location.name[lang]}
+              {location.name.ru}
             </h3>
-            <p class="mb-4 flex-grow" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; color: #44474d; white-space: pre-line;">
-              {location.address[lang]}
+            <p
+              data-location-address-ru={location.address.ru}
+              data-location-address-en={location.address.en}
+              class="mb-4 flex-grow"
+              style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; color: #44474d; white-space: pre-line;"
+            >
+              {location.address.ru}
             </p>
             <div class="mb-6 space-y-1">
-              {location.hours[lang].map((h) => (
-                <p style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; color: #44474d;">{h}</p>
+              {location.hours.ru.map((h, i) => (
+                <p
+                  data-location-hours
+                  data-location-hours-ru={location.hours.ru[i]}
+                  data-location-hours-en={location.hours.en[i]}
+                  style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; color: #44474d;"
+                >
+                  {h}
+                </p>
               ))}
             </div>
             <a
@@ -64,23 +77,29 @@ const lang = "ru";
             </div>
 
             <h3
+              data-location-name-ru={location.name.ru}
+              data-location-name-en={location.name.en}
               class="mb-2"
               style="font-family: 'Source Serif 4', Georgia, serif; font-size: 24px; font-weight: 600; line-height: 32px; color: #ffffff;"
             >
-              {location.name[lang]}
+              {location.name.ru}
             </h3>
             <p
+              data-location-address-ru={location.address.ru}
+              data-location-address-en={location.address.en}
               class="mb-4 flex-grow"
               style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; color: #8397b8; white-space: pre-line;"
             >
-              {location.address[lang]}
+              {location.address.ru}
             </p>
             <div class="mt-auto">
               <p
-                data-i18n="locations.status_soon"
+                data-location-hours
+                data-location-hours-ru={location.hours.ru[0]}
+                data-location-hours-en={location.hours.en[0]}
                 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: #ffb94d;"
               >
-                {location.hours[lang][0]}
+                {location.hours.ru[0]}
               </p>
             </div>
           </div>

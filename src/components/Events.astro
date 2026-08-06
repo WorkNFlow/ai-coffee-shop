@@ -1,7 +1,6 @@
 ---
 import ru from "../i18n/ru.json";
-import { contactsData } from "../data/contacts";
-import { InteractiveHoverButton } from "./ui/interactive-hover-button";
+import { ModalButton } from "./ui/ModalButton";
 
 const t = ru.events;
 ---
@@ -25,13 +24,12 @@ const t = ru.events;
       {t.description}
     </p>
 
-    <InteractiveHoverButton
+    <ModalButton
       client:load
-      href={`mailto:${contactsData.email}?subject=${encodeURIComponent('Запись на каппинг')}`}
-      data-mailto-type="cupping"
-      data-mailto-email={contactsData.email}
-      text={t.button}
-      data-i18n="events.button"
+      subjectRu="Запись на каппинг"
+      subjectEn="Cupping registration"
+      labelRu={t.button}
+      labelEn="Sign Up for Cupping"
       variant="secondary"
       className="shadow-md hover:scale-105 transition-transform duration-300"
     />

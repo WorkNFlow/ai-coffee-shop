@@ -113,6 +113,32 @@ const translationsJson = JSON.stringify({ ru, en });
           btn.setAttribute("href", `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
         });
 
+        // Translate menu item names (data-menu-name-ru / data-menu-name-en)
+        document.querySelectorAll("[data-menu-name-ru]").forEach((el) => {
+          const text = el.getAttribute(`data-menu-name-${lang}`);
+          if (text) el.textContent = text;
+        });
+
+        // Translate location card fields (data-location-name-ru/en, data-location-address-ru/en, data-location-hours-ru/en)
+        document.querySelectorAll("[data-location-name-ru]").forEach((el) => {
+          const text = el.getAttribute(`data-location-name-${lang}`);
+          if (text) el.textContent = text;
+        });
+        document.querySelectorAll("[data-location-address-ru]").forEach((el) => {
+          const text = el.getAttribute(`data-location-address-${lang}`);
+          if (text) el.textContent = text;
+        });
+        document.querySelectorAll("[data-location-hours]").forEach((el) => {
+          const ru_hours = el.getAttribute("data-location-hours-ru");
+          const en_hours = el.getAttribute("data-location-hours-en");
+          const hours = lang === "en" ? en_hours : ru_hours;
+          if (hours) el.textContent = hours;
+        });
+
+
+        // Notify React components about language change
+        window.dispatchEvent(new CustomEvent("langChange", { detail: { lang } }));
+
         // Update language switcher active states
         // Active lang: bold text + bottom border in primary navy
         // Inactive: muted text, transparent border
