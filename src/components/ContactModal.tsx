@@ -72,20 +72,33 @@ export function ContactModal({
     const templateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID as string;
     const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY as string;
 
+    if (!serviceId || !templateId || !publicKey) {
+      console.error(
+        "[EmailJS Error] Environment variables missing! Please check .env and restart dev server.",
+        { serviceId, templateId, publicKey }
+      );
+      setStatus("error");
+      return;
+    }
+
     try {
-      await emailjs.send(
+      const response = await emailjs.send(
         serviceId,
         templateId,
         {
           subject,
           from_name: fromName,
           from_email: fromEmail,
+          to_email: fromEmail,
+          reply_to: fromEmail,
           message,
         },
-        publicKey
+        { publicKey }
       );
+      console.log("[EmailJS Success]", response);
       setStatus("success");
-    } catch {
+    } catch (err: any) {
+      console.error("[EmailJS Error details]:", err);
       setStatus("error");
     }
   };
