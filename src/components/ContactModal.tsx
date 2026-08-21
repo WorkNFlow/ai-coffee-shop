@@ -27,7 +27,9 @@ export function ContactModal({
   const [fromName, setFromName] = useState("");
   const [fromEmail, setFromEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [honeypot, setHoneypot] = useState(""); // Honeypot field for bot detection
   const [status, setStatus] = useState<FormStatus>("idle");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const firstInputRef = useRef<HTMLInputElement>(null);
 
@@ -51,7 +53,9 @@ export function ContactModal({
       setFromName("");
       setFromEmail("");
       setMessage("");
+      setHoneypot("");
       setStatus("idle");
+      setErrorMessage("");
     }
   }, [isOpen, subject]);
 
@@ -66,7 +70,36 @@ export function ContactModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // 1. Honeypot check: If bot filled the invisible field, pretend success without sending email
+    if (honeypot.trim().length > 0) {
+      setStatus("success");
+      return;
+    }
+
+    const trimmedName = fromName.trim();
+    const trimmedEmail = fromEmail.trim();
+    const trimmedMessage = message.trim();
+
+    // 2. Input validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (trimmedName.length < 2 || !emailRegex.test(trimmedEmail) || trimmedMessage.length < 3) {
+      setErrorMessage((t as any).validation_error || t.error_text);
+      setStatus("error");
+      return;
+    }
+
+    // 3. Client-side Rate Limiting (min 30 seconds between submissions)
+    const lastSentTime = sessionStorage.getItem("bukhta_last_sent");
+    const now = Date.now();
+    if (lastSentTime && now - parseInt(lastSentTime, 10) < 30000) {
+      setErrorMessage((t as any).rate_limit_error || t.error_text);
+      setStatus("error");
+      return;
+    }
+
     setStatus("loading");
+    setErrorMessage("");
 
     const serviceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID as string;
     const templateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID as string;
@@ -77,28 +110,31 @@ export function ContactModal({
         "[EmailJS Error] Environment variables missing! Please check .env and restart dev server.",
         { serviceId, templateId, publicKey }
       );
+      setErrorMessage(t.error_text);
       setStatus("error");
       return;
     }
 
     try {
+      // Secure payload: omit client-controlled to_email (recipient is fixed in EmailJS dashboard template)
       const response = await emailjs.send(
         serviceId,
         templateId,
         {
           subject,
-          from_name: fromName,
-          from_email: fromEmail,
-          to_email: fromEmail,
-          reply_to: fromEmail,
-          message,
+          from_name: trimmedName,
+          from_email: trimmedEmail,
+          reply_to: trimmedEmail,
+          message: trimmedMessage,
         },
         { publicKey }
       );
       console.log("[EmailJS Success]", response);
+      sessionStorage.setItem("bukhta_last_sent", now.toString());
       setStatus("success");
     } catch (err: any) {
       console.error("[EmailJS Error details]:", err);
+      setErrorMessage(t.error_text);
       setStatus("error");
     }
   };
@@ -217,6 +253,20 @@ export function ContactModal({
         {/* ── Form (idle / loading / error) ── */}
         {status !== "success" && (
           <form onSubmit={handleSubmit} noValidate>
+            {/* Honeypot field (hidden for users, trap for spam bots) */}
+            <div style={{ display: "none" }} aria-hidden="true">
+              <label htmlFor="modal-website">Do not fill this</label>
+              <input
+                id="modal-website"
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+              />
+            </div>
+
             {/* Error banner */}
             {status === "error" && (
               <div
@@ -231,7 +281,7 @@ export function ContactModal({
                   lineHeight: "20px",
                 }}
               >
-                {t.error_text}
+                {errorMessage || t.error_text}
               </div>
             )}
 
@@ -256,6 +306,8 @@ export function ContactModal({
                 ref={firstInputRef}
                 type="text"
                 required
+                maxLength={100}
+                autoComplete="name"
                 value={fromName}
                 onChange={(e) => setFromName(e.target.value)}
                 placeholder={t.name_placeholder}
@@ -298,6 +350,8 @@ export function ContactModal({
                 id="modal-email"
                 type="email"
                 required
+                maxLength={150}
+                autoComplete="email"
                 value={fromEmail}
                 onChange={(e) => setFromEmail(e.target.value)}
                 placeholder={t.email_placeholder}
@@ -340,6 +394,7 @@ export function ContactModal({
                 id="modal-message"
                 required
                 rows={4}
+                maxLength={2000}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder={t.message_placeholder}

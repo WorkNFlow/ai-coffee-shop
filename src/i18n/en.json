@@ -84,6 +84,8 @@
     "success_title": "Message Sent!",
     "success_text": "We received your message and will reply within one business day.",
     "error_text": "Something went wrong. Please try again or email us directly at hello@bukhta.coffee.",
+    "validation_error": "Please provide a valid name, email address, and message.",
+    "rate_limit_error": "You recently sent a message. Please wait a moment before sending another.",
     "close": "Close"
   },
   "footer": {
