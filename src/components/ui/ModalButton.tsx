@@ -25,6 +25,11 @@ interface ModalButtonProps {
   className?: string;
 }
 
+const modalOptions = {
+  transition: "fade",
+  debug: false
+}
+
 export function ModalButton({
   subjectRu,
   subjectEn,
@@ -51,7 +56,7 @@ export function ModalButton({
   }, []);
 
   const subject = lang === "en" ? subjectEn : subjectRu;
-  const label   = lang === "en" ? labelEn   : labelRu;
+  const label = lang === "en" ? labelEn : labelRu;
 
   return (
     <>
@@ -59,7 +64,13 @@ export function ModalButton({
         text={label}
         variant={variant}
         className={className}
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          const isDark = (window as any).appSettings?.theme === "dark";
+          if (isDark) {
+            console.log("Dark modal theme active");
+          }
+          setIsOpen(true);
+        }}
       />
       <ContactModal
         isOpen={isOpen}

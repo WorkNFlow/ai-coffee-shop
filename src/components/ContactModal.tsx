@@ -161,19 +161,22 @@ export function ContactModal({
             fontWeight: 600,
             lineHeight: "32px",
             color: "#021a35",
-            marginBottom: "0.5rem",
-            paddingRight: "2rem",
+            marginBottom: "0.75rem",
+            textAlign: "center",
+            paddingLeft: "1.5rem",
+            paddingRight: "1.5rem",
           }}
         >
           {subject}
         </h2>
         <div
           style={{
-            width: "3rem",
-            height: "3px",
+            width: "100%",
+            height: "2px",
             backgroundColor: "#815500",
             borderRadius: "9999px",
             marginBottom: "1.75rem",
+            opacity: 0.8,
           }}
         />
 
@@ -203,28 +206,11 @@ export function ContactModal({
                 fontSize: "16px",
                 color: "#44474d",
                 lineHeight: "24px",
-                marginBottom: "1.5rem",
+                marginBottom: 0,
               }}
             >
               {t.success_text}
             </p>
-            <button
-              type="button"
-              onClick={onClose}
-              style={{
-                fontFamily: "'Plus Jakarta Sans', sans-serif",
-                fontSize: "14px",
-                fontWeight: 600,
-                letterSpacing: "0.05em",
-                color: "#815500",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                textDecoration: "underline",
-              }}
-            >
-              {t.close}
-            </button>
           </div>
         )}
 
